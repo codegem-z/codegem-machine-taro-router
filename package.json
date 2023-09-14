@@ -1,6 +1,6 @@
 {
   "name": "codegem-machine-taro-router",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.0",
   "description": "",
   "main": "./build/index.js",
   "types": "./build",
@@ -8,7 +8,8 @@
     "build"
   ],
   "scripts": {
-    "build": "rimraf build && tsc"
+    "build": "rimraf build && tsc",
+    "release": "pnpm renew-it"
   },
   "keywords": [],
   "author": "ben",

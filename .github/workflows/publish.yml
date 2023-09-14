@@ -1,0 +1,35 @@
+name: Publish to NPM
+
+on:
+  create:
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{github.ref}}"
+
+  publish:
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+      - uses: borales/actions-yarn@v3.0.0
+        with:
+          cmd: install
+      - run: yarn build
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}} # 跟前面步骤中的 NPM_AUTH_TOKEN 保持一致
+      # 企业微信消息
+      - name: WeChat Work notification by text
+        uses: chf007/action-wechat-work@master
+        env:
+          WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
+        with:
+          msgtype: text
+          content: "🎉 ${{steps.name.outputs.value}} : V${{steps.version.outputs.value}} 发布成功！"
