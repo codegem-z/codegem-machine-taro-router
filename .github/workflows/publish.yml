@@ -25,6 +25,20 @@ jobs:
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}} # 跟前面步骤中的 NPM_AUTH_TOKEN 保持一致
+      - name: read package name
+        id: name
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: ./package.json
+          prop_path: name
+
+      - name: read package version
+        id: version
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: ./package.json
+          prop_path: version
+
       # 企业微信消息
       - name: WeChat Work notification by text
         uses: chf007/action-wechat-work@master
