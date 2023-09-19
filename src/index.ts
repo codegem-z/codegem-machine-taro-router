@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { resolve, sep } from "path";
 import prettier from "prettier";
 
-export default function createRouteConfig() {
+export default function createTaroRouteConfig() {
   return (source: FileType[]) => {
     // console.log("source", JSON.stringify(source, null, 2))
     // FIXME: source : FileType
@@ -54,7 +54,7 @@ export default function createRouteConfig() {
       return {
         name,
         path: `/pages/${packageName}/${routeName}/index`,
-        isTabPage: false,
+        isTab: false,
       };
     });
     // 获取 route: pages/tab/[name]/index.tsx
@@ -68,7 +68,7 @@ export default function createRouteConfig() {
       return {
         name,
         path: `/pages/tab/${routeName}/index`,
-        isTabPage: true,
+        isTab: true,
       };
     });
     // 获取 route: pages/[name]/index.tsx
@@ -83,7 +83,7 @@ export default function createRouteConfig() {
       return {
         name,
         path: `/pages/${routeName}/index`,
-        isTabPage: false,
+        isTab: false,
       };
     });
 
