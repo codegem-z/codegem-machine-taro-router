@@ -46,4 +46,4 @@ jobs:
           WECHAT_WORK_BOT_WEBHOOK: ${{secrets.WECHAT_WORK_BOT_WEBHOOK}}
         with:
           msgtype: text
-          content: "🎉 ${{steps.name.outputs.value}} : V${{steps.version.outputs.value}} 发布成功！"
+          content: "🎉 ${{steps.name.outputs.prop}} : V${{steps.version.outputs.prop}} 发布成功！"
