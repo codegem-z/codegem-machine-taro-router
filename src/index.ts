@@ -97,7 +97,12 @@ export default function createTaroRouteConfig() {
     const codePart2 = `export const routeList: RouteList<Name> = ${JSON.stringify(
       routeConfigList
     )};`;
-    const generatedCode = codePart1 + codePart2;
+
+    const pages = routeConfigList.map((it) => it.path.slice(1, it.path.length));
+
+    const codePart3 = `export const pages = ${JSON.stringify(pages)}`;
+
+    const generatedCode = codePart1 + codePart2 + codePart3;
 
     const formateCode = prettier.format(generatedCode, {
       printWidth: 80,
