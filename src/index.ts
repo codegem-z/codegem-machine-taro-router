@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { resolve, sep } from "path";
 import prettier from "prettier";
 
-export default function createTaroRouteConfig() {
+export default function createTaroRouteConfig({ home }: { home: string }) {
   return (source: FileType[]) => {
     // console.log("source", JSON.stringify(source, null, 2))
     // FIXME: source : FileType
@@ -100,7 +100,12 @@ export default function createTaroRouteConfig() {
 
     const pages = routeConfigList.map((it) => it.path.slice(1, it.path.length));
 
-    const codePart3 = `export const pages = ${JSON.stringify(pages)}`;
+    pages.unshift(home);
+    const pageSet = new Set(pages);
+
+    const codePart3 = `export const pages = ${JSON.stringify(
+      Array.from(pageSet)
+    )}`;
 
     const generatedCode = codePart1 + codePart2 + codePart3;
 
